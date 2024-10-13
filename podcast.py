@@ -146,8 +146,8 @@ podcast_prompt_template = """
 # 格式
 你必须使用 <podcast></podcast> XML 标签中的格式输出播客内容，除此之外，不要输出其他文字
 <podcast>
-[发言者]: [对话内容]
-[发言者]: [对话内容]
+Alice或Bob: 对话内容
+Alice或Bob: 对话内容
 </podcast>
 # 输出示例
 Alice: 对观众问好，然后对文本进行总结概括，引出本篇播客要讨论的内容
@@ -266,7 +266,7 @@ class Podcast:
         :return: 更新后的PodcastSegment对象列表，每个对象包含生成的音频文件路径
         """
         for segment in segments:
-            voice = "onyx" if segment.speaker == "Bob" else "nova"
+            voice = "onyx" if segment.speaker.lower() == "bob" else "nova"
             print(f"[Podcast] Generating audio for {segment.speaker}: {segment.text}")
             audio_content = self.openai_audio(segment.text, voice)
             audio_path = os.path.join(self.audio_dir, f"podcast_seg_{str(uuid.uuid4())[:18]}.mp3")
