@@ -266,7 +266,7 @@ class Podcast:
         :return: 更新后的PodcastSegment对象列表，每个对象包含生成的音频文件路径
         """
         for segment in segments:
-            voice = "onyx" if segment.speaker.lower() == "bob" else "nova"
+            voice = "onyx" if "bob" in segment.speaker.lower() else "nova"
             print(f"[Podcast] Generating audio for {segment.speaker}: {segment.text}")
             audio_content = self.openai_audio(segment.text, voice)
             audio_path = os.path.join(self.audio_dir, f"podcast_seg_{str(uuid.uuid4())[:18]}.mp3")
